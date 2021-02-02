@@ -84,6 +84,6 @@ BEGIN
 
 	--output assignment
 	o_Result 	<= int_S_Pass(6 downto 0) OR int_A_Pass(6 downto 0) ;
-	o_flag_V    	<= (int_S_Flag AND in_Inc_DecBar) OR (int_A_Flag AND not(in_Inc_DecBar) ) ;
+	o_flag_V    	<= (int_A_Flag AND in_Inc_DecBar) OR (int_S_Flag AND not(in_Inc_DecBar) ) ;
 
 END struct;
