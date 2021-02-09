@@ -11,8 +11,11 @@ USE ieee.std_logic_1164.ALL;
 ENTITY mantissaRound IS
 	PORT (
 		mntNorm : IN STD_LOGIC_VECTOR (7 downto 0);
-		roundUp, Load, Rst, Clk : IN STD_LOGIC;
-		mntRound : OUT STD_LOGIC_VECTOR (8 downto 0)
+		grsIn : IN STD_LOGIC_VECTOR (2 downto 0);
+		Load, Rst, Clk : IN STD_LOGIC;
+		mntRound : OUT STD_LOGIC_VECTOR (8 downto 0);
+		grsOut : OUT STD_LOGIC_VECTOR (2 downto 0);
+		mntRnd_NORM : OUT STD_LOGIC
 	);
 END;
 
@@ -37,8 +40,11 @@ END COMPONENT;
 
 SIGNAL int_B : STD_LOGIC_VECTOR (7 downto 0);
 SIGNAL int_mntRound : STD_LOGIC_VECTOR (8 downto 0);
+SIGNAL int_roundUp : STD_LOGIC;
 
 BEGIN
+
+	int_roundUp <= grsIn(2) AND (grsIn(1) OR grsIn(0));
 
 	int_B(7) <= '0';
 	int_B(6) <= '0';
@@ -47,7 +53,7 @@ BEGIN
 	int_B(3) <= '0';
 	int_B(2) <= '0';
 	int_B(1) <= '0';
-	int_B(0) <= roundUp;
+	int_B(0) <= int_roundUp;
 
 	-- Component Instantiation --
 	INC: roundAdder_8bit
@@ -66,6 +72,9 @@ BEGIN
 		  Q => mntRound,
 		  QBar => OPEN
 	);
+
+	grsOut <= grsIn;
+	mntRnd_NORM <= (NOT int_mntRound(8));
 		  
 END struct;
 

@@ -57,7 +57,7 @@ BEGIN
 
 	-- Concurrent Signal Assignment
 	rstD <= rstBar AND d;
-	int_notD <= NOT d;
+	int_notD <= NOT int_d;
 	q <= int_hold;
 	int_Clk <= clk;
 	int_notClk <= NOT int_Clk;
